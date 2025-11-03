@@ -1,0 +1,408 @@
+/* Osnoven Resett i Fontovi */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #007bff; /* Svetlo plava - Vaša akcent boja */
+    --secondary-color: #6c757d; /* Siva */
+    --text-color: #333;
+    --bg-color: #f8f9fa;
+    --dark-bg: #212529;
+    --dark-text: #f8f9fa;
+    --card-bg: #fff;
+    --transition-speed: 0.3s;
+}
+
+/* Dark Mode Promenlivi */
+body.dark-mode {
+    --text-color: #f8f9fa;
+    --bg-color: #121212;
+    --dark-bg: #1f1f1f;
+    --card-bg: #2c2c2c;
+    --primary-color: #4da6ff; /* Posvetla akcent boja za temen režim */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Sekcii */
+.section {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+/* HEADER/NAVIGACIJA */
+header {
+    background-color: var(--card-bg);
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+#navbar a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    font-weight: 600;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+/* Hover Efekt 2025: Linija pod tekstot */
+#navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width var(--transition-speed);
+}
+
+#navbar a:hover::after {
+    width: 100%;
+}
+
+/* Utilities (Jazik/Dark Mode) */
+.nav-utils {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-selector button, #dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 5px;
+    color: var(--secondary-color);
+    transition: color var(--transition-speed), transform 0.1s;
+}
+
+.language-selector button.active, #dark-mode-toggle:hover {
+    color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+#menu-toggle {
+    display: none; /* Skrien na desktop */
+}
+
+/* HOME (HERO SEKCIJA) */
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-bg); /* Mračno pozadinsko stilo za dobar kontrast */
+    color: var(--dark-text);
+    padding: 50px 0;
+}
+
+.hero-content {
+    text-align: left;
+}
+
+.hero .subtitle {
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.hero .title {
+    font-size: 3.5em;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.1;
+    margin: 5px 0 10px;
+}
+
+.hero .tagline {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: var(--secondary-color);
+    margin-bottom: 25px;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color var(--transition-speed), transform 0.2s;
+}
+
+.cta-button:hover {
+    background: #0056b3; /* Potemna pri hover */
+    transform: translateY(-2px); /* Mikro-animacija nagore */
+}
+
+/* ABOUT SEKCIJA */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: left;
+}
+
+.profile-image {
+   
+    width: 35%;
+    height: 500px;
+    /* Koristi ja tvojata slika 'dime-profil.jpg' ovde: */
+    background: url('./dime1.jpg') no-repeat center center/cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+/* Родителскиот елемент за сликата мора да биде Flex контејнер */
+.about-image-wrapper {
+    display: flex;
+    justify-content: center; /* Ова ја центрира сликата хоризонтално */
+}
+
+.about-text p {
+    margin-bottom: 15px;
+}
+
+/* PORTFOLIO GRID */
+.dark-bg {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.portfolio-item {
+    height: 300px;
+    background: var(--secondary-color); /* Ke gi smenite so sliki vo CSS */
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* Primer za sliki na portfolio */
+.portfolio-item { background: url('./1.png') no-repeat center center/cover; }
+.portfolio-item.item-2 { background: url('./2.png') no-repeat center center/cover; }
+.portfolio-item.item-3 { background: url('./3.png') no-repeat center center/cover; }
+
+.portfolio-item:hover {
+    transform: scale(1.03);
+}
+
+/* Hover Efekt (Overlay) */
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Temen prekrivač */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Skrien po default */
+    transition: opacity 0.3s;
+}
+
+.portfolio-item:hover .project-overlay {
+    opacity: 1; /* Se pojavuva na hover */
+}
+
+.project-overlay h4 {
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+/* CONTACT FORMA */
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-color); /* Promenliva za Dark Mode */
+}
+
+#contact-form input[type="text"],
+#contact-form input[type="email"],
+#contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* FOOTER */
+footer {
+    background: var(--dark-bg);
+    color: var(--secondary-color);
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    margin: 0 10px;
+    transition: color 0.2s;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+/* ======================================= */
+/* RESPONSIVE DIZAJN (Za Telefon) */
+/* ======================================= */
+@media (max-width: 768px) {
+    #navbar {
+        display: none; /* Skrij go menito na telefon */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px; /* Pod headerot */
+        left: 0;
+        background-color: var(--card-bg);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 10px 0;
+    }
+
+    #navbar.open {
+        display: flex; /* Pokaži go menito koga e aktivno */
+    }
+
+    #navbar a {
+        padding: 10px 20px;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+    }
+
+    #navbar a::after { /* Iskluci ja linijata na mobilno meni */
+        content: none;
+    }
+
+    #menu-toggle {
+        display: block;
+        font-size: 1.5em;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    header .container {
+        padding: 0 15px;
+    }
+
+    .nav-utils {
+        display: none; /* Možes da gi premestis vo menito, no za ednostavnost se skrieni */
+    }
+
+    .hero .title {
+        font-size: 2.5em;
+    }
+
+    .hero .tagline {
+        font-size: 1.2em;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+
+    }
+    .profile-image {
+        width: 90%; /* Сликата зафаќа 90% од ширината на екранот */
+        height: 400px; /* Може да ја намалиме висината за мобилен */
+        max-width: none; /* Осигурува дека нема ограничување од десктоп */
+    }
+    
+    /* Додаваме малку растојание под сликата */
+    .about-image-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .about-image-wrapper {
+        order: -1; /* Slikata da bide nad tekstot na telefon */
+    }
+
+    footer .container {
+        flex-direction: column;
+    }
+}
