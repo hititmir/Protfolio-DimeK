@@ -90,9 +90,37 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('portfolioLang', 'eng');
     });
 
+    // =======================================
+    // 4. PORTFOLIO READ MORE
+    // =======================================
+    const portfolioReadMore = document.getElementById('portfolio-read-more');
+    const portfolioContainer = document.querySelector('.portfolio-container');
+    let isMoreVisible = false;
+
+    portfolioReadMore.addEventListener('click', () => {
+        isMoreVisible = !isMoreVisible;
+        
+        if (isMoreVisible) {
+            portfolioContainer.classList.add('show-more');
+            // Update button text
+            if (document.documentElement.lang === 'en') {
+                portfolioReadMore.textContent = 'Show Less';
+            } else {
+                portfolioReadMore.textContent = 'Прикажи Помалку';
+            }
+        } else {
+            portfolioContainer.classList.remove('show-more');
+            // Update button text
+            if (document.documentElement.lang === 'en') {
+                portfolioReadMore.textContent = 'Show More';
+            } else {
+                portfolioReadMore.textContent = 'Прикажи Повеќе';
+            }
+        }
+    });
 
     // =======================================
-    // 4. KONTAKT FORMA (Primer - Samo Prikazuva Status)
+    // 5. KONTAKT FORMA
     // =======================================
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
