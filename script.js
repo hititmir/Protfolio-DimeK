@@ -8,20 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const elementsToTranslate = document.querySelectorAll('[data-lang-mkd]');
 
     // =======================================
-    // 1. DARK MODE TOGGLE
+    // 1. DARK MODE
     // =======================================
-
-    // Proverka na lokalnata memorija za zapameten režim
     const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
     if (isDarkMode) {
         body.classList.add('dark-mode');
-        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Promena na ikona
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
     }
 
     darkModeToggle.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
         
-        // Zapamti go izborot vo lokalna memorija
         if (body.classList.contains('dark-mode')) {
             localStorage.setItem('darkMode', 'enabled');
             darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
@@ -32,12 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =======================================
-    // 2. MOBILE MENU TOGGLE
+    // 2. MOBILE MENU
     // =======================================
     menuToggle.addEventListener('click', () => {
         navbar.classList.toggle('open');
         const icon = menuToggle.querySelector('i');
-        // Promena na ikonata: od hamburger (bars) vo X (times)
         if (navbar.classList.contains('open')) {
             icon.classList.remove('fa-bars');
             icon.classList.add('fa-times');
@@ -48,22 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =======================================
-    // 3. JAZIK SELEKTOR (MKD/ENG)
+    // 3. LANGUAGE SWITCH
     // =======================================
-    
     function setLanguage(lang) {
-        // Promena na jazikot za sekoj element
         elementsToTranslate.forEach(element => {
-            if (lang === 'eng') {
-                // Zemi go tekstot od data-lang-eng atributot
-                element.textContent = element.getAttribute('data-lang-eng');
-            } else {
-                // Zemi go tekstot od data-lang-mkd atributot
-                element.textContent = element.getAttribute('data-lang-mkd');
-            }
+            element.textContent = element.getAttribute(
+                lang === 'eng' ? 'data-lang-eng' : 'data-lang-mkd'
+            );
         });
 
-        // Promena na aktivno kopče
         if (lang === 'eng') {
             engBtn.classList.add('active');
             mkdBtn.classList.remove('active');
@@ -75,11 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Postavi go jazikot po default na MKD (ili zapameten od local storage)
     const savedLang = localStorage.getItem('portfolioLang') || 'mkd';
     setLanguage(savedLang);
 
-    // Event Listeners za kopčinjata
     mkdBtn.addEventListener('click', () => {
         setLanguage('mkd');
         localStorage.setItem('portfolioLang', 'mkd');
@@ -91,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =======================================
-    // 4. PORTFOLIO READ MORE
+    // 4. READ MORE (PORTFOLIO)
     // =======================================
     const portfolioReadMore = document.getElementById('portfolio-read-more');
     const portfolioContainer = document.querySelector('.portfolio-container');
@@ -99,48 +86,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     portfolioReadMore.addEventListener('click', () => {
         isMoreVisible = !isMoreVisible;
-        
-        if (isMoreVisible) {
-            portfolioContainer.classList.add('show-more');
-            // Update button text
-            if (document.documentElement.lang === 'en') {
-                portfolioReadMore.textContent = 'Show Less';
-            } else {
-                portfolioReadMore.textContent = 'Прикажи Помалку';
-            }
-        } else {
-            portfolioContainer.classList.remove('show-more');
-            // Update button text
-            if (document.documentElement.lang === 'en') {
-                portfolioReadMore.textContent = 'Show More';
-            } else {
-                portfolioReadMore.textContent = 'Прикажи Повеќе';
-            }
-        }
+        portfolioContainer.classList.toggle('show-more');
+
+        portfolioReadMore.textContent =
+            document.documentElement.lang === 'en'
+                ? (isMoreVisible ? 'Show Less' : 'Show More')
+                : (isMoreVisible ? 'Прикажи Помалку' : 'Прикажи Повеќе');
     });
 
     // =======================================
-    // 5. KONTAKT FORMA
+    // 5. CONTACT FORM (Web3Forms)
     // =======================================
-    const contactForm = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
+    const form = document.getElementById('form');   // ← важно: мора да постои во HTML!
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Spreči standardno submition na formata
-        
-        // Tuka se izvršuva kodot za ispraḱanje na email (obiočno so PHP/Node.js backend)
-        
-        // Prikazi status
-        formStatus.style.color = 'green';
-        const currentLang = document.documentElement.lang;
-        if (currentLang === 'en') {
-             formStatus.textContent = 'Message sent successfully! I will reply soon.';
-        } else {
-             formStatus.textContent = 'Пораката е успешно испратена! Ќе ви одговорам наскоро.';
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        formData.append("access_key", "c09f7ae5-4494-43c6-91ad-5272cd2d598a"); // ← ОВА МЕСТО!
+
+        const originalText = submitBtn.textContent;
+
+        submitBtn.textContent = "Sending...";
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Success! Your message has been sent.");
+                form.reset();
+            } else {
+                alert("Error: " + data.message);
+            }
+
+        } catch (error) {
+            alert("Something went wrong. Please try again.");
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
-        
-        contactForm.reset();
-        setTimeout(() => { formStatus.textContent = ''; }, 5000);
     });
-    
 });
